@@ -77,9 +77,6 @@ export default function PricingPage() {
                     <th scope="col" className="px-6 py-3 text-right text-sm font-semibold text-slate-700">
                       Price
                     </th>
-                    <th scope="col" className="px-6 py-3 text-right text-sm font-semibold text-slate-700">
-                      Run time
-                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
@@ -89,10 +86,10 @@ export default function PricingPage() {
                         {d.size}
                       </th>
                       <td className="px-6 py-4 text-right tabular-nums text-slate-700">
-                        {display(d.price)}
-                      </td>
-                      <td className="px-6 py-4 text-right tabular-nums text-slate-700">
-                        {display(d.minutes)} min
+                        {display(d.price)}{" "}
+                        <span className="text-slate-500">
+                          per {display(d.minutes)} min
+                        </span>
                       </td>
                     </tr>
                   ))}
@@ -100,7 +97,8 @@ export default function PricingPage() {
               </table>
             </div>
             <p className="mt-4 text-sm leading-relaxed text-slate-500">
-              Add more time as needed.
+              Add as much time as you need. Our washers spin at a high extract
+              speed, so most loads need less dryer time than you are used to.
             </p>
           </div>
         </div>

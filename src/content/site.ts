@@ -175,20 +175,30 @@ export const totalDryers = equipment.dryers.reduce((n, d) => n + d.count, 0);
 export const pricing = {
   /** Hot-wash price (ATS1) for each washer size. */
   washers: [
-    { size: "20 lb", price: "TODO: $0.00" },
-    { size: "30 lb", price: "TODO: $0.00" },
-    { size: "60 lb", price: "TODO: $0.00" },
+    { size: "20 lb", price: "$4.00" },
+    { size: "30 lb", price: "$5.75" },
+    { size: "60 lb", price: "$7.50" },
   ],
 
-  /** Dryers: a flat price buys a fixed run time. */
+  /**
+   * Dryers. ATSH is the vend price and CYC is the time that vend buys, so this
+   * is a rate — 50 cents per 6 minutes — not the length of a whole cycle. The
+   * page renders it as a rate so nobody reads "6 min" as the full dry time.
+   */
   dryers: [
-    { size: "30 lb", price: "TODO: $0.00", minutes: "TODO: 00" },
-    { size: "45 lb", price: "TODO: $0.00", minutes: "TODO: 00" },
+    { size: "30 lb", price: "$0.50", minutes: "6" },
+    { size: "45 lb", price: "$0.75", minutes: "6" },
   ],
 
-  /** Disclaimer printed under the washer table. */
+  /**
+   * Disclaimer printed under the washer table.
+   *
+   * Hot is the most expensive cycle at every size, so saying warm and cold
+   * cost less is both accurate and worth telling people — it is a reason to
+   * come in, not just a hedge.
+   */
   washerNote:
-    "Prices shown are for a hot wash. Other cycle options are priced separately, and add-ons such as extra wash or extra rinse cost more.",
+    "Prices shown are for a hot wash; warm and cold cycles cost less. Add-ons such as extra wash and extra rinse are priced at the machine.",
 
   /**
    * Laundry supplies are sold on site but not priced here — prices in the
