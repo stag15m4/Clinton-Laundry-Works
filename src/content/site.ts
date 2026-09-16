@@ -20,7 +20,18 @@ export const business = {
   phone: "(910) 627-8040",
   /** Digits only, with country code — used for the tap-to-call link on mobile. */
   phoneHref: "+19106278040",
-  email: "TODO: an address you actually monitor",
+  /**
+   * Public contact address.
+   *
+   * Held behind the TODO gate until a test message has actually been received.
+   * An address that bounces is worse than none at all: a business-account
+   * enquiry that fails silently is a lost customer you never learn about.
+   *
+   * Set up as a free forward (Cloudflare Email Routing) to an inbox that is
+   * already read daily, so there is no second mailbox to remember to check.
+   * Once a test send arrives, delete the "TODO: " prefix and it goes live.
+   */
+  email: "TODO: info@clintonlaundryworks.com",
 
   address: {
     street: "540 McKoy St",

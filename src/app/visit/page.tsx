@@ -132,16 +132,18 @@ export default function VisitPage() {
                   </a>
                 </dd>
               </div>
-              <div>
-                <dt className="text-sm font-semibold uppercase tracking-wide text-slate-500">
-                  Email
-                </dt>
-                <dd className="mt-1 text-lg">
-                  <a href={mailtoHref(business.email)} className="text-brand-700 hover:underline">
-                    {display(business.email)}
-                  </a>
-                </dd>
-              </div>
+              {!isPlaceholder(business.email) && (
+                <div>
+                  <dt className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+                    Email
+                  </dt>
+                  <dd className="mt-1 text-lg">
+                    <a href={mailtoHref(business.email)} className="text-brand-700 hover:underline">
+                      {display(business.email)}
+                    </a>
+                  </dd>
+                </div>
+              )}
             </dl>
           </div>
         </div>

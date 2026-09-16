@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { business, hours } from "@/content/site";
-import { display, telHref, mailtoHref } from "@/content/util";
+import { display, telHref, mailtoHref, isPlaceholder } from "@/content/util";
 import { Container } from "./Container";
 
 export function Footer() {
@@ -23,11 +23,13 @@ export function Footer() {
                 {display(business.phone)}
               </a>
             </p>
-            <p>
-              <a href={mailtoHref(business.email)} className="hover:text-white">
-                {display(business.email)}
-              </a>
-            </p>
+            {!isPlaceholder(business.email) && (
+              <p>
+                <a href={mailtoHref(business.email)} className="hover:text-white">
+                  {display(business.email)}
+                </a>
+              </p>
+            )}
           </div>
 
           <div>
