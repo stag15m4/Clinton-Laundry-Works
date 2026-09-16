@@ -33,16 +33,22 @@ export const business = {
    * Google Maps link, used by the "Open in Maps" button and published as
    * `hasMap` in the LocalBusiness structured data.
    *
-   * The `?g_st=` tracking parameter that Maps appends when you share from a
-   * phone has been stripped; it identifies the sharing app, not the place, and
-   * does not belong in a public link.
+   * HELD BACK ON PURPOSE. The Business Profile at this address is claimed but
+   * still carries the previous operator's name (Fluff n Fold) pending Google
+   * verification. Publishing it now would send customers to a listing with the
+   * wrong business name, and would point `hasMap` at a listing whose name
+   * contradicts this site — exactly the name/address/phone inconsistency that
+   * hurts local search results.
    *
-   * Clear this and the site falls back to building a Maps search from the
-   * street address above, which needs no listing at all. That fallback is the
-   * safety net if this short link ever stops resolving — a full
-   * google.com/maps/place/ URL is the more durable long-term form.
+   * While this stays a TODO the site falls back to a Maps search built from
+   * the street address, which gives correct directions without asserting a
+   * business identity. Once Google verifies the rename, drop the "TODO: "
+   * prefix and this goes live as-is.
+   *
+   * The `?g_st=` tracking parameter Maps appends when sharing from a phone has
+   * already been stripped; it identifies the sharing app, not the place.
    */
-  mapUrl: "https://maps.app.goo.gl/9WcnxucA9MwwhVx68",
+  mapUrl: "TODO: https://maps.app.goo.gl/9WcnxucA9MwwhVx68 (live once Google verifies the rename from Fluff n Fold)",
 
   /**
    * Google review link, for the "leave us a review" call to action.
