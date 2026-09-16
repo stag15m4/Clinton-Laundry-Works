@@ -54,3 +54,45 @@ export function mailtoHref(value: string, subject?: string): string {
     ? `mailto:${address}?subject=${encodeURIComponent(subject)}`
     : `mailto:${address}`;
 }
+
+/**
+ * Best available map link for the store.
+ *
+ * Prefers an explicit `mapUrl` (a claimed Google Business Profile, which shows
+ * reviews and photos). Falls back to a plain Maps search for the street
+ * address, which needs no listing and gives working directions today.
+ */
+export function mapsUrl(
+  mapUrl: string,
+  address: { street: string; city: string; state: string; zip: string }
+): string | undefined {
+  const explicit = orUndefined(mapUrl);
+  if (explicit) return explicit;
+
+  const parts = [address.street, address.city, address.state, address.zip]
+    .map(display)
+    .filter((part) => part && !isPlaceholder(part));
+  if (parts.length === 0) return undefined;
+
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(parts.join(", "))}`;
+}
+
+/**
+ * Lowest real price in a set, formatted for a "from $X" summary.
+ *
+ * Returns undefined while any value is still a placeholder, so the summary is
+ * simply omitted rather than advertising a made-up starting price.
+ */
+export function lowestPrice(values: readonly (string | null)[]): string | undefined {
+  const amounts: number[] = [];
+
+  for (const value of values) {
+    if (value === null) continue;           // cycle not offered — not a price
+    if (isPlaceholder(value)) return undefined;
+    const parsed = Number.parseFloat(value.replace(/[^0-9.]/g, ""));
+    if (Number.isFinite(parsed)) amounts.push(parsed);
+  }
+
+  if (amounts.length === 0) return undefined;
+  return `$${Math.min(...amounts).toFixed(2)}`;
+}

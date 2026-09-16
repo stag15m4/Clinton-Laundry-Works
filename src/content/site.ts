@@ -17,26 +17,41 @@ export const business = {
   tagline: "Clean clothes, fast machines, no hassle.",
 
   // ── TODO: REPLACE ALL CONTACT DETAILS BELOW ────────────────────────────────
-  phone: "TODO: (555) 555-0123",
+  phone: "(910) 627-8040",
   /** Digits only, with country code — used for the tap-to-call link on mobile. */
-  phoneHref: "TODO: +15555550123",
-  email: "TODO: hello@clintonlaundryworks.com",
+  phoneHref: "+19106278040",
+  email: "TODO: an address you actually monitor",
 
   address: {
-    street: "TODO: 123 Main Street",
-    city: "TODO: Clinton",
-    state: "TODO: XX",
-    zip: "TODO: 00000",
+    street: "540 McKoy St",
+    city: "Clinton",
+    state: "NC",
+    zip: "28328",
   },
 
   /**
-   * Google Maps link. Easiest way to get the right one: search your business
-   * on Google Maps, click Share, and copy the link.
+   * Google Maps link.
+   *
+   * Leave this empty and the site builds a maps search from the street address
+   * above, which works today and needs no Google Business Profile. Once the
+   * signage is up and the Business Profile is claimed, paste the Share link
+   * here and it takes precedence — a real listing shows reviews and photos
+   * where a bare address search does not.
    */
-  mapUrl: "TODO: https://maps.google.com/?q=Clinton+Laundry+Works",
+  mapUrl: "",
+
+  /**
+   * Google review link, for the "leave us a review" call to action.
+   *
+   * Empty until the Business Profile exists; the button stays hidden until
+   * then. Once claimed, use the short review URL Google gives you
+   * (https://g.page/r/<id>/review) so it opens the review box directly
+   * instead of the listing.
+   */
+  googleReviewUrl: "",
 
   /** Public site URL once the domain is live. Used for SEO canonical tags. */
-  siteUrl: "TODO: https://clintonlaundryworks.com",
+  siteUrl: "https://www.clintonlaundryworks.com",
 
   /** Optional — leave as empty strings to hide the social icons entirely. */
   social: {
@@ -57,17 +72,17 @@ export const business = {
  * TODO: Replace every row below with real hours.
  */
 export const hours = [
-  { day: "Monday",    open: "TODO: 6:00 AM – 10:00 PM", attended: "TODO: 8:00 AM – 4:00 PM" },
-  { day: "Tuesday",   open: "TODO: 6:00 AM – 10:00 PM", attended: "TODO: 8:00 AM – 4:00 PM" },
-  { day: "Wednesday", open: "TODO: 6:00 AM – 10:00 PM", attended: "TODO: 8:00 AM – 4:00 PM" },
-  { day: "Thursday",  open: "TODO: 6:00 AM – 10:00 PM", attended: "TODO: 8:00 AM – 4:00 PM" },
-  { day: "Friday",    open: "TODO: 6:00 AM – 10:00 PM", attended: "TODO: 8:00 AM – 4:00 PM" },
-  { day: "Saturday",  open: "TODO: 6:00 AM – 10:00 PM", attended: "TODO: 8:00 AM – 2:00 PM" },
-  { day: "Sunday",    open: "TODO: 6:00 AM – 10:00 PM", attended: null },
+  { day: "Monday",    open: "6:00 AM – 10:00 PM", attended: "TODO: attended hours" },
+  { day: "Tuesday",   open: "6:00 AM – 10:00 PM", attended: "TODO: attended hours" },
+  { day: "Wednesday", open: "6:00 AM – 10:00 PM", attended: "TODO: attended hours" },
+  { day: "Thursday",  open: "6:00 AM – 10:00 PM", attended: "TODO: attended hours" },
+  { day: "Friday",    open: "6:00 AM – 10:00 PM", attended: "TODO: attended hours" },
+  { day: "Saturday",  open: "6:00 AM – 10:00 PM", attended: "TODO: attended hours" },
+  { day: "Sunday",    open: "6:00 AM – 10:00 PM", attended: "TODO: attended hours" },
 ] as const;
 
 /** Last wash is started this long before closing. Set to null to hide the notice. */
-export const lastWashNotice = "TODO: Last wash starts 1 hour before closing";
+export const lastWashNotice = "TODO: how long before closing the last wash can start — or set to null to hide this";
 
 /**
  * Equipment — these counts are pulled from the live equipment records in the
@@ -106,29 +121,102 @@ export const totalDryers = equipment.dryers.reduce((n, d) => n + d.count, 0);
 /**
  * Pricing.
  *
- * TODO: Replace every price below with real prices.
+ * This mirrors how prices are actually configured on the machines, and how the
+ * ops app stores them: a washer has a separate vend price per cycle (the ATS
+ * codes on the machine controller) plus two optional upcharges, and a dryer is
+ * a flat price for a fixed run time.
  *
- * Deliberately hardcoded rather than pulled from the ops database: it keeps the
- * public site with zero runtime dependency on the internal system, and prices
- * change rarely. Edit this array when they do.
+ * Cycle names map to controller codes like this:
+ *
+ *   ATS1 Hot          ATS4 Blankets Cold     CnP1 Extra Wash
+ *   ATS2 Warm         ATS5 Delicate Warm     CnP2 Extra Rinse
+ *   ATS3 Cold         ATS6 Delicate Cold
+ *
+ * TODO: Replace every price below. The values live in the ops app under
+ *       Equipment → Pricing, grouped by model number:
+ *
+ *         60 lb washers  HCN060KCFX02004     45 lb dryers  HTT45NKCG2G2N05
+ *         30 lb washers  HCN030KCFX03003     30 lb dryers  HTT30NKCB2G2N04
+ *         20 lb washers  HCN020KCFX03003     20 lb dryers  HTT20NKCB2G2N04
+ *
+ * Hardcoded rather than read from that database on purpose: the public site
+ * keeps working regardless of the ops app, and prices change rarely.
+ *
+ * A cycle priced `null` is not offered on that machine size and is rendered as
+ * a dash rather than a missing price.
  */
+
+/** Cycle columns, in the order they appear on the pricing table. */
+export const washerCycles = [
+  "Hot",
+  "Warm",
+  "Cold",
+  "Blankets Cold",
+  "Delicate Warm",
+  "Delicate Cold",
+] as const;
+
+export type WasherCycle = (typeof washerCycles)[number];
+
 export const pricing = {
   washers: [
-    { size: "20 lb", price: "TODO: $3.50" },
-    { size: "30 lb", price: "TODO: $5.00" },
-    { size: "60 lb", price: "TODO: $8.50" },
+    {
+      size: "20 lb",
+      cycles: {
+        "Hot": "TODO: $0.00",
+        "Warm": "TODO: $0.00",
+        "Cold": "TODO: $0.00",
+        "Blankets Cold": "TODO: $0.00",
+        "Delicate Warm": "TODO: $0.00",
+        "Delicate Cold": "TODO: $0.00",
+      },
+    },
+    {
+      size: "30 lb",
+      cycles: {
+        "Hot": "TODO: $0.00",
+        "Warm": "TODO: $0.00",
+        "Cold": "TODO: $0.00",
+        "Blankets Cold": "TODO: $0.00",
+        "Delicate Warm": "TODO: $0.00",
+        "Delicate Cold": "TODO: $0.00",
+      },
+    },
+    {
+      size: "60 lb",
+      cycles: {
+        "Hot": "TODO: $0.00",
+        "Warm": "TODO: $0.00",
+        "Cold": "TODO: $0.00",
+        "Blankets Cold": "TODO: $0.00",
+        "Delicate Warm": "TODO: $0.00",
+        "Delicate Cold": "TODO: $0.00",
+      },
+    },
+  ] as readonly {
+    readonly size: string;
+    readonly cycles: Readonly<Record<WasherCycle, string | null>>;
+  }[],
+
+  /** Optional add-ons, priced once across all washers. */
+  washerExtras: [
+    { label: "Extra Wash", price: "TODO: $0.00" },
+    { label: "Extra Rinse", price: "TODO: $0.00" },
   ],
+
+  /** Dryers: a flat price buys a fixed run time. */
   dryers: [
-    { size: "20 lb", price: "TODO: $0.25 / 5 min" },
-    { size: "30 lb", price: "TODO: $0.25 / 4 min" },
-    { size: "45 lb", price: "TODO: $0.25 / 3 min" },
+    { size: "20 lb", price: "TODO: $0.00", minutes: "TODO: 00" },
+    { size: "30 lb", price: "TODO: $0.00", minutes: "TODO: 00" },
+    { size: "45 lb", price: "TODO: $0.00", minutes: "TODO: 00" },
   ],
+
   /** Set to null to hide the vending section on the pricing page. */
   vending: [
-    { item: "Detergent pod", price: "TODO: $1.50" },
-    { item: "Dryer sheets (2 pk)", price: "TODO: $0.75" },
-    { item: "Bleach packet", price: "TODO: $1.00" },
-    { item: "Fabric softener packet", price: "TODO: $1.00" },
+    { item: "Detergent pod", price: "TODO: $0.00" },
+    { item: "Dryer sheets (2 pk)", price: "TODO: $0.00" },
+    { item: "Bleach packet", price: "TODO: $0.00" },
+    { item: "Fabric softener packet", price: "TODO: $0.00" },
   ],
 } as const;
 
@@ -201,7 +289,7 @@ export const faqs = [
   },
   {
     q: "Is someone there to help?",
-    a: "An attendant is on site during the attended hours listed on our hours page. Outside those hours the store is open and self-serve.",
+    a: "An attendant is on site for part of the day. Outside those hours the store is open and fully self-serve — every machine works exactly the same. Call us if you need a hand and we will tell you when someone is in.",
   },
   {
     q: "Do you sell detergent?",

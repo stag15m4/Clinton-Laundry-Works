@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
 import { business, hours, lastWashNotice } from "@/content/site";
-import { display, isPlaceholder, telHref, mailtoHref } from "@/content/util";
+import { display, isPlaceholder, telHref, mailtoHref, mapsUrl } from "@/content/util";
 
 export const metadata: Metadata = {
   title: "Hours & Location",
@@ -12,7 +12,11 @@ export const metadata: Metadata = {
 
 export default function VisitPage() {
   const { address } = business;
-  const hasAttendant = hours.some((h) => h.attended);
+  const mapLink = mapsUrl(business.mapUrl, address);
+  // Only show the attended column once at least one day has real hours; until
+  // then every cell would read "to be posted", which is noise rather than
+  // information.
+  const hasAttendant = hours.some((h) => h.attended && !isPlaceholder(h.attended));
 
   return (
     <>
@@ -22,8 +26,8 @@ export default function VisitPage() {
             Hours &amp; location
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-slate-300">
-            Open seven days a week, with an attendant on site during the hours
-            listed below.
+            Open 6:00 AM to 10:00 PM, seven days a week.
+            {hasAttendant && " An attendant is on site during the hours listed below."}
           </p>
         </Container>
       </div>
@@ -59,10 +63,12 @@ export default function VisitPage() {
                       <td className="px-5 py-3 text-slate-700">{display(h.open)}</td>
                       {hasAttendant && (
                         <td className="px-5 py-3 text-slate-500">
-                          {h.attended ? (
-                            display(h.attended)
-                          ) : (
+                          {!h.attended ? (
                             <span className="text-slate-400">Self-serve</span>
+                          ) : isPlaceholder(h.attended) ? (
+                            <span className="text-slate-400">To be posted</span>
+                          ) : (
+                            display(h.attended)
                           )}
                         </td>
                       )}
@@ -72,7 +78,7 @@ export default function VisitPage() {
               </table>
             </div>
 
-            {lastWashNotice && (
+            {lastWashNotice && !isPlaceholder(lastWashNotice) && (
               <p className="mt-4 rounded-lg bg-amber-50 px-4 py-3 text-sm text-amber-900">
                 {display(lastWashNotice)}
               </p>
@@ -97,9 +103,9 @@ export default function VisitPage() {
             </address>
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              {!isPlaceholder(business.mapUrl) && (
+              {mapLink && (
                 <a
-                  href={business.mapUrl}
+                  href={mapLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="rounded-lg bg-brand-600 px-6 py-3 text-center font-semibold text-white transition hover:bg-brand-700"
