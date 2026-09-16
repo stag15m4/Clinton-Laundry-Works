@@ -77,22 +77,3 @@ export function mapsUrl(
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(parts.join(", "))}`;
 }
 
-/**
- * Lowest real price in a set, formatted for a "from $X" summary.
- *
- * Returns undefined while any value is still a placeholder, so the summary is
- * simply omitted rather than advertising a made-up starting price.
- */
-export function lowestPrice(values: readonly (string | null)[]): string | undefined {
-  const amounts: number[] = [];
-
-  for (const value of values) {
-    if (value === null) continue;           // cycle not offered — not a price
-    if (isPlaceholder(value)) return undefined;
-    const parsed = Number.parseFloat(value.replace(/[^0-9.]/g, ""));
-    if (Number.isFinite(parsed)) amounts.push(parsed);
-  }
-
-  if (amounts.length === 0) return undefined;
-  return `$${Math.min(...amounts).toFixed(2)}`;
-}

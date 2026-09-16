@@ -92,7 +92,7 @@ form that silently goes nowhere.
 Machine counts in `site.ts`:
 
 - **13 Huebsch washers** — 2 × 60 lb, 6 × 30 lb, 5 × 20 lb
-- **16 Huebsch dryer drums** — 4 × 45 lb, 8 × 30 lb, 4 × 20 lb (8 stacked units)
+- **16 Huebsch dryer drums** — 4 × 45 lb, 12 × 30 lb (8 stacked units)
 
 These are hardcoded rather than fetched at runtime, so the site stays up
 regardless of anything else and loads instantly. Update them here when the

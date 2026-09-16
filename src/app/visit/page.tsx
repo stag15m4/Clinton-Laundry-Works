@@ -122,16 +122,6 @@ export default function VisitPage() {
             </div>
 
             <dl className="mt-10 space-y-4">
-              <div>
-                <dt className="text-sm font-semibold uppercase tracking-wide text-slate-500">
-                  Phone
-                </dt>
-                <dd className="mt-1 text-lg">
-                  <a href={telHref(business.phoneHref)} className="text-brand-700 hover:underline">
-                    {display(business.phone)}
-                  </a>
-                </dd>
-              </div>
               {!isPlaceholder(business.email) && (
                 <div>
                   <dt className="text-sm font-semibold uppercase tracking-wide text-slate-500">

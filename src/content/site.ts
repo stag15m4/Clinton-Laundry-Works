@@ -93,17 +93,23 @@ export const business = {
  * TODO: Replace every row below with real hours.
  */
 export const hours = [
-  { day: "Monday",    open: "6:00 AM – 10:00 PM", attended: "TODO: attended hours" },
-  { day: "Tuesday",   open: "6:00 AM – 10:00 PM", attended: "TODO: attended hours" },
-  { day: "Wednesday", open: "6:00 AM – 10:00 PM", attended: "TODO: attended hours" },
-  { day: "Thursday",  open: "6:00 AM – 10:00 PM", attended: "TODO: attended hours" },
-  { day: "Friday",    open: "6:00 AM – 10:00 PM", attended: "TODO: attended hours" },
-  { day: "Saturday",  open: "6:00 AM – 10:00 PM", attended: "TODO: attended hours" },
-  { day: "Sunday",    open: "6:00 AM – 10:00 PM", attended: "TODO: attended hours" },
+  { day: "Monday",    open: "6:00 AM – 10:00 PM", attended: null },
+  { day: "Tuesday",   open: "6:00 AM – 10:00 PM", attended: null },
+  { day: "Wednesday", open: "6:00 AM – 10:00 PM", attended: null },
+  { day: "Thursday",  open: "6:00 AM – 10:00 PM", attended: null },
+  { day: "Friday",    open: "6:00 AM – 10:00 PM", attended: null },
+  { day: "Saturday",  open: "6:00 AM – 10:00 PM", attended: null },
+  { day: "Sunday",    open: "6:00 AM – 10:00 PM", attended: null },
 ] as const;
 
-/** Last wash is started this long before closing. Set to null to hide the notice. */
-export const lastWashNotice = "TODO: how long before closing the last wash can start — or set to null to hide this";
+/**
+ * Notice shown under the hours table, e.g. a last-wash cutoff.
+ *
+ * Set to null deliberately: there is no cutoff. A wash can be started any time
+ * the store is open, so posting "last wash 10:00 PM" would only restate the
+ * closing time and tell a customer nothing.
+ */
+export const lastWashNotice: string | null = null;
 
 /**
  * Equipment — these counts are pulled from the live equipment records in the
@@ -131,8 +137,11 @@ export const equipment = {
   ],
   dryers: [
     { size: "45 lb", count: 4 },
-    { size: "30 lb", count: 8 },
-    { size: "20 lb", count: 4 },
+    // Includes the four drums recorded in the ops app under model
+    // HTT20NKCB2G2N04 as 20 lb (serials 1704049141 and 1704049142). Those are
+    // mislabeled 30 lb units; the ops records are what need correcting, not
+    // this list.
+    { size: "30 lb", count: 12 },
   ],
 } as const;
 
@@ -140,105 +149,53 @@ export const totalWashers = equipment.washers.reduce((n, w) => n + w.count, 0);
 export const totalDryers = equipment.dryers.reduce((n, d) => n + d.count, 0);
 
 /**
- * Pricing.
+ * Pricing, deliberately simplified for a public page.
  *
- * This mirrors how prices are actually configured on the machines, and how the
- * ops app stores them: a washer has a separate vend price per cycle (the ATS
- * codes on the machine controller) plus two optional upcharges, and a dryer is
- * a flat price for a fixed run time.
+ * The machines support far more than this: each washer carries a separate vend
+ * price per cycle (ATS1 Hot through ATS6 Delicate Cold) plus Extra Wash and
+ * Extra Rinse upcharges. Publishing that full matrix is noise for someone
+ * standing in the parking lot deciding whether to come in. So the page shows
+ * one number per washer size — the HOT wash price, ATS1 — and a short note
+ * that other cycles and add-ons are priced separately.
  *
- * Cycle names map to controller codes like this:
+ * Hot is the right number to publish because it is the most expensive cycle:
+ * the posted price becomes a ceiling, and nobody is ever charged more than the
+ * website led them to expect.
  *
- *   ATS1 Hot          ATS4 Blankets Cold     CnP1 Extra Wash
- *   ATS2 Warm         ATS5 Delicate Warm     CnP2 Extra Rinse
- *   ATS3 Cold         ATS6 Delicate Cold
- *
- * TODO: Replace every price below. The values live in the ops app under
- *       Equipment → Pricing, grouped by model number:
+ * TODO: Replace every price below. Values live in the ops app under
+ *       Equipment -> Pricing, grouped by model number:
  *
  *         60 lb washers  HCN060KCFX02004     45 lb dryers  HTT45NKCG2G2N05
  *         30 lb washers  HCN030KCFX03003     30 lb dryers  HTT30NKCB2G2N04
- *         20 lb washers  HCN020KCFX03003     20 lb dryers  HTT20NKCB2G2N04
+ *         20 lb washers  HCN020KCFX03003
  *
- * Hardcoded rather than read from that database on purpose: the public site
- * keeps working regardless of the ops app, and prices change rarely.
- *
- * A cycle priced `null` is not offered on that machine size and is rendered as
- * a dash rather than a missing price.
+ *       For washers take the ATS1 (Hot) value. For dryers take ATSH (price)
+ *       and CYC (run time in minutes).
  */
-
-/** Cycle columns, in the order they appear on the pricing table. */
-export const washerCycles = [
-  "Hot",
-  "Warm",
-  "Cold",
-  "Blankets Cold",
-  "Delicate Warm",
-  "Delicate Cold",
-] as const;
-
-export type WasherCycle = (typeof washerCycles)[number];
-
 export const pricing = {
+  /** Hot-wash price (ATS1) for each washer size. */
   washers: [
-    {
-      size: "20 lb",
-      cycles: {
-        "Hot": "TODO: $0.00",
-        "Warm": "TODO: $0.00",
-        "Cold": "TODO: $0.00",
-        "Blankets Cold": "TODO: $0.00",
-        "Delicate Warm": "TODO: $0.00",
-        "Delicate Cold": "TODO: $0.00",
-      },
-    },
-    {
-      size: "30 lb",
-      cycles: {
-        "Hot": "TODO: $0.00",
-        "Warm": "TODO: $0.00",
-        "Cold": "TODO: $0.00",
-        "Blankets Cold": "TODO: $0.00",
-        "Delicate Warm": "TODO: $0.00",
-        "Delicate Cold": "TODO: $0.00",
-      },
-    },
-    {
-      size: "60 lb",
-      cycles: {
-        "Hot": "TODO: $0.00",
-        "Warm": "TODO: $0.00",
-        "Cold": "TODO: $0.00",
-        "Blankets Cold": "TODO: $0.00",
-        "Delicate Warm": "TODO: $0.00",
-        "Delicate Cold": "TODO: $0.00",
-      },
-    },
-  ] as readonly {
-    readonly size: string;
-    readonly cycles: Readonly<Record<WasherCycle, string | null>>;
-  }[],
-
-  /** Optional add-ons, priced once across all washers. */
-  washerExtras: [
-    { label: "Extra Wash", price: "TODO: $0.00" },
-    { label: "Extra Rinse", price: "TODO: $0.00" },
+    { size: "20 lb", price: "TODO: $0.00" },
+    { size: "30 lb", price: "TODO: $0.00" },
+    { size: "60 lb", price: "TODO: $0.00" },
   ],
 
   /** Dryers: a flat price buys a fixed run time. */
   dryers: [
-    { size: "20 lb", price: "TODO: $0.00", minutes: "TODO: 00" },
     { size: "30 lb", price: "TODO: $0.00", minutes: "TODO: 00" },
     { size: "45 lb", price: "TODO: $0.00", minutes: "TODO: 00" },
   ],
 
-  /** Set to null to hide the vending section on the pricing page. */
-  vending: [
-    { item: "Detergent pod", price: "TODO: $0.00" },
-    { item: "Dryer sheets (2 pk)", price: "TODO: $0.00" },
-    { item: "Bleach packet", price: "TODO: $0.00" },
-    { item: "Fabric softener packet", price: "TODO: $0.00" },
-  ],
+  /** Disclaimer printed under the washer table. */
+  washerNote:
+    "Prices shown are for a hot wash. Other cycle options are priced separately, and add-ons such as extra wash or extra rinse cost more.",
+
+  /**
+   * Laundry supplies are sold on site but not priced here — prices in the
+   * vending machine are authoritative and change more often than this page.
+   */
+  suppliesNote:
+    "Detergent, fabric softener, bleach, and dryer sheets are all available in store, so a forgotten bottle does not cost you a trip home.",
 } as const;
 
 /**
@@ -284,7 +241,7 @@ export const highlights = [
   },
   {
     title: "Staffed part of the day",
-    body: "An attendant is on site during posted hours if you need change, a hand, or a question answered.",
+    body: "An attendant is on site part of the day if you need change, a hand, or a question answered. Give us a call and we will tell you when someone is in.",
   },
   {
     title: "Supplies in store",

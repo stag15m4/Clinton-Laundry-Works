@@ -142,8 +142,8 @@ export default function HomePage() {
         <Container className="py-16 text-center">
           <h2 className="text-3xl font-bold tracking-tight">Come get it done</h2>
           <p className="mx-auto mt-4 max-w-xl text-lg text-brand-100">
-            Plenty of machines, supplies on site, and an attendant during posted
-            hours.
+            Plenty of machines, supplies on site, and an attendant for part of
+            the day.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
             <Link

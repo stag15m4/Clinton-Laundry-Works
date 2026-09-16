@@ -18,9 +18,18 @@ const lines = readFileSync(file, "utf8").split("\n");
 
 const found = [];
 lines.forEach((line, i) => {
-  // Only flag placeholder *values*, not the explanatory comments above them.
+  const trimmed = line.trim();
+
+  // Skip comment lines. Several doc comments quote the literal string
+  // `"TODO: "` while explaining how to clear a placeholder; matching those
+  // would mean the gate could never pass no matter how much is filled in.
+  if (trimmed.startsWith("*") || trimmed.startsWith("//") || trimmed.startsWith("/*")) {
+    return;
+  }
+
+  // Flag placeholder values: a string literal that opens with TODO:.
   if (/"\s*TODO:/.test(line)) {
-    found.push({ line: i + 1, text: line.trim() });
+    found.push({ line: i + 1, text: trimmed });
   }
 });
 
