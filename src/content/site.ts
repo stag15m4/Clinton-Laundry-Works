@@ -30,15 +30,19 @@ export const business = {
   },
 
   /**
-   * Google Maps link.
+   * Google Maps link, used by the "Open in Maps" button and published as
+   * `hasMap` in the LocalBusiness structured data.
    *
-   * Leave this empty and the site builds a maps search from the street address
-   * above, which works today and needs no Google Business Profile. Once the
-   * signage is up and the Business Profile is claimed, paste the Share link
-   * here and it takes precedence — a real listing shows reviews and photos
-   * where a bare address search does not.
+   * The `?g_st=` tracking parameter that Maps appends when you share from a
+   * phone has been stripped; it identifies the sharing app, not the place, and
+   * does not belong in a public link.
+   *
+   * Clear this and the site falls back to building a Maps search from the
+   * street address above, which needs no listing at all. That fallback is the
+   * safety net if this short link ever stops resolving — a full
+   * google.com/maps/place/ URL is the more durable long-term form.
    */
-  mapUrl: "",
+  mapUrl: "https://maps.app.goo.gl/9WcnxucA9MwwhVx68",
 
   /**
    * Google review link, for the "leave us a review" call to action.
