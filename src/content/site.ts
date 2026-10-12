@@ -194,12 +194,12 @@ export const pricing = {
 
   /**
    * Dryers. ATSH is the vend price and CYC is the time that vend buys, so this
-   * is a rate — 50 cents per 6 minutes — not the length of a whole cycle. The
-   * page renders it as a rate so nobody reads "6 min" as the full dry time.
+   * is a rate, not the length of a whole cycle. The page renders it as a rate
+   * so nobody reads e.g. "6 min" as the full dry time.
    */
   dryers: [
     { size: "30 lb", price: "$0.50", minutes: "6" },
-    { size: "45 lb", price: "$0.75", minutes: "6" },
+    { size: "45 lb", price: "$0.75", minutes: "9" },
   ],
 
   /**
