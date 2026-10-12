@@ -335,3 +335,31 @@ export const commercialSegments = [
     body: "Sheets, duvets, and towels between guests, sized for same-day turnover.",
   },
 ] as const;
+
+/**
+ * Photo + caption pairs shown in the "What's inside" row on the Hours &
+ * Location page. `src` is a path under public/photos/.
+ */
+export const amenityPhotos = [
+  {
+    src: "/photos/change-machine.jpg",
+    width: 1800,
+    height: 2400,
+    alt: "Bill-to-coin change machine, accepts $1, $5, $10, and $20",
+    caption: "Need quarters? The change machine takes $1, $5, $10, and $20 bills.",
+  },
+  {
+    src: "/photos/restroom.jpg",
+    width: 2400,
+    height: 1800,
+    alt: "Clean, accessible restroom",
+    caption: "A clean, accessible restroom is on site.",
+  },
+  {
+    src: "/photos/vending-snacks.jpg",
+    width: 1733,
+    height: 2400,
+    alt: "Vending machine stocked with snacks and drinks",
+    caption: "Forgot a snack or a drink? The vending machine has you covered.",
+  },
+] as const;

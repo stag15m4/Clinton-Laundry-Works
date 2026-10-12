@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
-import { business, hours, lastWashNotice } from "@/content/site";
+import { amenityPhotos, business, hours, lastWashNotice } from "@/content/site";
 import { display, isPlaceholder, telHref, mailtoHref, mapsUrl } from "@/content/util";
 
 export const metadata: Metadata = {
@@ -22,13 +23,26 @@ export default function VisitPage() {
     <>
       <div className="bg-slate-900 text-white">
         <Container className="py-16">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            Hours &amp; location
-          </h1>
-          <p className="mt-4 max-w-2xl text-lg text-slate-300">
-            Open 6:00 AM to 10:00 PM, seven days a week.
-            {hasAttendant && " An attendant is on site during the hours listed below."}
-          </p>
+          <div className="grid items-center gap-10 lg:grid-cols-2">
+            <div>
+              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+                Hours &amp; location
+              </h1>
+              <p className="mt-4 max-w-2xl text-lg text-slate-300">
+                Open 6:00 AM to 10:00 PM, seven days a week.
+                {hasAttendant && " An attendant is on site during the hours listed below."}
+              </p>
+            </div>
+
+            <Image
+              src="/photos/doorway.jpg"
+              alt={`Looking into ${business.name} through the front door`}
+              width={1800}
+              height={2400}
+              priority
+              className="max-h-[420px] w-full rounded-2xl object-cover shadow-2xl"
+            />
+          </div>
         </Container>
       </div>
 
@@ -136,6 +150,23 @@ export default function VisitPage() {
               )}
             </dl>
           </div>
+        </div>
+      </Section>
+
+      <Section tone="muted" title="What's inside">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {amenityPhotos.map((photo) => (
+            <figure key={photo.src} className="overflow-hidden rounded-xl bg-white shadow-sm">
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                width={photo.width}
+                height={photo.height}
+                className="h-64 w-full object-cover"
+              />
+              <figcaption className="p-5 text-slate-600">{photo.caption}</figcaption>
+            </figure>
+          ))}
         </div>
       </Section>
     </>
