@@ -112,6 +112,29 @@ export const hours = [
 export const lastWashNotice: string | null = null;
 
 /**
+ * Opening-week schedule, shown as a site-wide banner and as a highlighted
+ * table at the top of the Hours & Location page, above the regular hours
+ * table in `hours`. `hours` above already states the real target schedule
+ * (6:00 AM - 10:00 PM every day) -- this is only the override for the days
+ * listed, while the store eases into that.
+ *
+ * Set `active` to false once the regular schedule takes over; nothing else
+ * needs to change, and both the banner and the page callout disappear.
+ */
+export const temporaryHours = {
+  active: true,
+  resumesNote: "Regular hours (6:00 AM – 10:00 PM every day) start back up Sunday, October 18.",
+  days: [
+    { day: "Tuesday", date: "Oct 13", open: "9:00 AM – 5:00 PM" },
+    { day: "Wednesday", date: "Oct 14", open: "12:00 PM – 7:00 PM" },
+    { day: "Thursday", date: "Oct 15", open: "9:00 AM – 5:00 PM" },
+    { day: "Friday", date: "Oct 16", open: "9:00 AM – 5:00 PM" },
+    { day: "Saturday", date: "Oct 17", open: "9:00 AM – 5:00 PM" },
+    { day: "Sunday", date: "Oct 18", open: "6:00 AM – 10:00 PM" },
+  ],
+} as const;
+
+/**
  * Short "who we are" blurb, shown on the home page between the hero and the
  * feature grid. Owner-provided wording — edit with care, not auto-generated.
  */

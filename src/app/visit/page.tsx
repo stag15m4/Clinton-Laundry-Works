@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
-import { amenityPhotos, business, hours, lastWashNotice } from "@/content/site";
+import { amenityPhotos, business, hours, lastWashNotice, temporaryHours } from "@/content/site";
 import { display, isPlaceholder, telHref, mailtoHref, mapsUrl } from "@/content/util";
 
 export const metadata: Metadata = {
@@ -29,7 +29,9 @@ export default function VisitPage() {
                 Hours &amp; location
               </h1>
               <p className="mt-4 max-w-2xl text-lg text-slate-300">
-                Open 6:00 AM to 10:00 PM, seven days a week.
+                {temporaryHours.active
+                  ? "We're easing into regular hours this week — see the adjusted schedule below."
+                  : "Open 6:00 AM to 10:00 PM, seven days a week."}
                 {hasAttendant && " An attendant is on site during the hours listed below."}
               </p>
             </div>
@@ -46,11 +48,49 @@ export default function VisitPage() {
         </Container>
       </div>
 
+      {temporaryHours.active && (
+        <div className="bg-amber-50">
+          <Container className="py-10">
+            <h2 className="text-2xl font-bold text-amber-950">This week&rsquo;s hours</h2>
+            <p className="mt-2 max-w-2xl text-amber-900">{temporaryHours.resumesNote}</p>
+            <div className="mt-6 overflow-hidden rounded-xl border border-amber-200 bg-white">
+              <table className="w-full text-left">
+                <thead className="border-b border-amber-200 bg-amber-100">
+                  <tr>
+                    <th scope="col" className="px-5 py-3 text-sm font-semibold text-amber-950">
+                      Day
+                    </th>
+                    <th scope="col" className="px-5 py-3 text-sm font-semibold text-amber-950">
+                      Hours
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-amber-100">
+                  {temporaryHours.days.map((d) => (
+                    <tr key={d.day}>
+                      <th scope="row" className="px-5 py-3 font-medium text-slate-900">
+                        {d.day} <span className="font-normal text-slate-500">({d.date})</span>
+                      </th>
+                      <td className="px-5 py-3 text-slate-700">{d.open}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Container>
+        </div>
+      )}
+
       <Section>
         <div className="grid gap-12 lg:grid-cols-2">
           {/* Hours table */}
           <div>
-            <h2 className="text-2xl font-bold">Hours</h2>
+            <h2 className="text-2xl font-bold">
+              {temporaryHours.active ? "Regular hours" : "Hours"}
+            </h2>
+            {temporaryHours.active && (
+              <p className="mt-1 text-sm text-slate-500">Starting Sunday, October 18.</p>
+            )}
             <div className="mt-6 overflow-hidden rounded-xl border border-slate-200">
               <table className="w-full text-left">
                 <thead className="border-b border-slate-200 bg-slate-50">
