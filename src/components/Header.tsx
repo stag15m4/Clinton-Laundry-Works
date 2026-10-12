@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { business } from "@/content/site";
@@ -20,12 +21,15 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
       <Container>
         <div className="flex h-16 items-center justify-between">
-          <Link
-            href="/"
-            className="text-lg font-bold tracking-tight text-slate-900"
-            onClick={() => setOpen(false)}
-          >
-            {business.name}
+          <Link href="/" className="shrink-0" onClick={() => setOpen(false)}>
+            <Image
+              src="/logo.png"
+              alt={business.name}
+              width={2919}
+              height={260}
+              priority
+              className="h-7 w-auto sm:h-8 md:h-9"
+            />
           </Link>
 
           <nav className="hidden items-center gap-8 md:flex" aria-label="Main">

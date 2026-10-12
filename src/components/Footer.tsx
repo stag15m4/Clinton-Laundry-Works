@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { business, hours } from "@/content/site";
+import { business, hours, payment } from "@/content/site";
 import { display, telHref, mailtoHref, isPlaceholder } from "@/content/util";
+import { CardIcons } from "./CardIcons";
 import { Container } from "./Container";
 
 export function Footer() {
@@ -55,10 +56,14 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-slate-800 pt-8 text-sm text-slate-500">
-          <p>
+        <div className="mt-12 flex flex-col gap-6 border-t border-slate-800 pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-slate-500">
             &copy; {new Date().getFullYear()} {business.name}. All rights reserved.
           </p>
+          <div className="flex items-center gap-3 text-slate-500">
+            <span className="text-sm">{payment.card.title}</span>
+            <CardIcons />
+          </div>
         </div>
       </Container>
     </footer>

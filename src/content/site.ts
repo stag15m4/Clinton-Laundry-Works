@@ -112,6 +112,18 @@ export const hours = [
 export const lastWashNotice: string | null = null;
 
 /**
+ * Short "who we are" blurb, shown on the home page between the hero and the
+ * feature grid. Owner-provided wording — edit with care, not auto-generated.
+ */
+export const about = {
+  heading: "Proudly Serving North Clinton.",
+  paragraphs: [
+    "Clinton Laundry Works is proud to be locally owned and operated right here in the heart of our community. We're committed to providing North Clinton with a safe, ultra-clean, and top-quality spot to get your wash done right.",
+    "No fluff, no nonsense—just reliable machines, a safe environment, and local owners who care about doing right by the neighborhood. Stop by and see the difference!",
+  ],
+} as const;
+
+/**
  * Equipment — these counts are pulled from the live equipment records in the
  * Laundroweb ops system, so they are accurate as of the last audit.
  * Update if machines are added or retired.

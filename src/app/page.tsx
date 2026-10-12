@@ -1,7 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
 import {
+  about,
   business,
   highlights,
   equipment,
@@ -18,35 +20,53 @@ export default function HomePage() {
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <div className="bg-slate-900 text-white">
         <Container className="py-20 sm:py-28">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-widest text-brand-300">
-              {display(business.address.city)}, {display(business.address.state)}
-            </p>
-            <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-6xl">
-              {business.tagline}
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-slate-300">
-              {totalWashers} washers and {totalDryers} dryers of {equipment.brand}{" "}
-              commercial equipment — including 60 lb machines that swallow a
-              comforter whole. In and out in a single trip.
-            </p>
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <Link
-                href="/visit/"
-                className="rounded-lg bg-brand-500 px-6 py-3 text-center text-base font-semibold text-white transition hover:bg-brand-400"
-              >
-                Hours &amp; directions
-              </Link>
-              <Link
-                href="/pricing/"
-                className="rounded-lg border border-slate-600 px-6 py-3 text-center text-base font-semibold text-white transition hover:bg-slate-800"
-              >
-                See pricing
-              </Link>
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-widest text-brand-300">
+                {display(business.address.city)}, {display(business.address.state)}
+              </p>
+              <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-6xl">
+                {business.tagline}
+              </h1>
+              <p className="mt-6 text-lg leading-relaxed text-slate-300">
+                {totalWashers} washers and {totalDryers} dryers of {equipment.brand}{" "}
+                commercial equipment — including 60 lb machines that swallow a
+                comforter whole. In and out in a single trip.
+              </p>
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+                <Link
+                  href="/visit/"
+                  className="rounded-lg bg-brand-500 px-6 py-3 text-center text-base font-semibold text-white transition hover:bg-brand-400"
+                >
+                  Hours &amp; directions
+                </Link>
+                <Link
+                  href="/pricing/"
+                  className="rounded-lg border border-slate-600 px-6 py-3 text-center text-base font-semibold text-white transition hover:bg-slate-800"
+                >
+                  See pricing
+                </Link>
+              </div>
             </div>
+
+            <Image
+              src="/photos/hero-aisle.jpg"
+              alt={`Rows of ${equipment.brand} washers and dryers inside ${business.name}`}
+              width={2400}
+              height={1800}
+              priority
+              className="rounded-2xl shadow-2xl"
+            />
           </div>
         </Container>
       </div>
+
+      {/* ── About ────────────────────────────────────────────────────────── */}
+      <Section tone="muted" title={about.heading} lead={about.paragraphs[0]}>
+        <p className="max-w-2xl text-lg leading-relaxed text-slate-600">
+          {about.paragraphs[1]}
+        </p>
+      </Section>
 
       {/* ── Why here ─────────────────────────────────────────────────────── */}
       <Section
