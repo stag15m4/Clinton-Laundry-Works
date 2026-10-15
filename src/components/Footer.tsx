@@ -2,6 +2,7 @@ import Link from "next/link";
 import { business, hours, payment } from "@/content/site";
 import { display, telHref, mailtoHref, isPlaceholder } from "@/content/util";
 import { CardIcons } from "./CardIcons";
+import { SocialIcons } from "./SocialIcons";
 import { Container } from "./Container";
 
 export function Footer() {
@@ -31,6 +32,7 @@ export function Footer() {
                 </a>
               </p>
             )}
+            <SocialIcons className="mt-4" />
           </div>
 
           <div>

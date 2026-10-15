@@ -76,7 +76,7 @@ export const business = {
 
   /** Optional — leave as empty strings to hide the social icons entirely. */
   social: {
-    facebook: "",
+    facebook: "https://www.facebook.com/clintonlaundryworks",
     instagram: "",
   },
 } as const;
