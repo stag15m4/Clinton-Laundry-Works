@@ -1,5 +1,9 @@
 import { business } from "@/content/site";
 
+/** Facebook mark (simple-icons, CC0) -- shared with FacebookInviteBanner. */
+export const FACEBOOK_ICON_PATH =
+  "M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.391 0 .957.075 1.472.15.258.039.517.079.727.12v3.491c-.179-.019-.513-.057-.967-.057-1.42 0-1.97.6-1.97 2.056v1.818h3.016l-.52 3.667h-2.496v7.98H9.101Z";
+
 /**
  * Social links shown in the footer. Each entry's url comes from
  * business.social in site.ts -- empty string hides that icon entirely.
@@ -10,7 +14,7 @@ const icons: { name: string; url: string; path: string }[] = [
   {
     name: "Facebook",
     url: business.social.facebook,
-    path: "M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.391 0 .957.075 1.472.15.258.039.517.079.727.12v3.491c-.179-.019-.513-.057-.967-.057-1.42 0-1.97.6-1.97 2.056v1.818h3.016l-.52 3.667h-2.496v7.98H9.101Z",
+    path: FACEBOOK_ICON_PATH,
   },
   {
     name: "Instagram",
