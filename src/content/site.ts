@@ -122,7 +122,7 @@ export const lastWashNotice: string | null = null;
  * needs to change, and both the banner and the page callout disappear.
  */
 export const temporaryHours = {
-  active: true,
+  active: false,
   resumesNote: "Regular hours (6:00 AM – 10:00 PM every day) start back up Sunday, October 18.",
   days: [
     { day: "Tuesday", date: "Oct 13", open: "9:00 AM – 5:00 PM" },
