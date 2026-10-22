@@ -110,3 +110,32 @@ src/
 scripts/
   check-content.mjs pre-launch placeholder gate
 ```
+
+## Google rating and featured reviews
+
+The homepage links to the verified Business Profile and direct review form.
+It displays the **unfiltered overall Google rating** and only written reviews
+rated 4 or 5 stars under a clearly labeled featured-review section.
+No rating or testimonials are invented when Google data is unavailable.
+
+To enable the rating and comments, set these secrets in the build environment:
+
+- `GOOGLE_PLACES_API_KEY`: a Google Maps Platform key with **Places API (New)**
+  enabled. Restrict it to that API and, where supported, the build runner's IP.
+  Billing must be enabled; review requests can incur Google API charges.
+- `GOOGLE_PLACE_ID`: the Place ID of the verified **Clinton Laundry Works,
+  540 McKoy St, Clinton, NC 28328** listing. Obtain it from Google's Place ID
+  finder; the short review-link code is not a Place ID.
+
+The key is used during static export only and never embedded in browser code.
+Google supplies a limited selection (up to five reviews), so this is not an
+archive of every qualifying review. Author attribution and Google links stay
+with each displayed review. The date shown records when the site was built.
+Rebuild/redeploy to refresh the rating and comments; the static site cannot poll
+Google on its own. Without credentials or if Google is unavailable, visitors
+still see working links to read all reviews and leave their own.
+
+Google references:
+- https://developers.google.com/maps/documentation/places/web-service/place-details
+- https://developers.google.com/maps/documentation/places/web-service/policies
+- https://developers.google.com/maps/documentation/places/web-service/place-id
