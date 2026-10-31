@@ -5,6 +5,8 @@ import { Footer } from "@/components/Footer";
 import { StructuredData } from "@/components/StructuredData";
 import { TemporaryHoursBanner } from "@/components/TemporaryHoursBanner";
 import { FacebookInviteBanner } from "@/components/FacebookInviteBanner";
+import { SkipToContentLink } from "@/components/SkipToContentLink";
+import { LanguageProvider } from "@/i18n/LanguageProvider";
 import { business } from "@/content/site";
 import { display, orUndefined } from "@/content/util";
 
@@ -33,19 +35,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="flex min-h-screen flex-col bg-white font-sans text-slate-900 antialiased">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-brand-600 focus:px-4 focus:py-2 focus:font-semibold focus:text-white"
-        >
-          Skip to content
-        </a>
-        <FacebookInviteBanner />
-        <TemporaryHoursBanner />
-        <Header />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <Footer />
+        <LanguageProvider>
+          <SkipToContentLink />
+          <FacebookInviteBanner />
+          <TemporaryHoursBanner />
+          <Header />
+          <main id="main" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+        </LanguageProvider>
         <StructuredData />
       </body>
     </html>
