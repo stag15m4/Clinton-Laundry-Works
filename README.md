@@ -28,6 +28,8 @@ half-filled site cannot reach production. You must fill in:
 | Prices | Currently placeholder dollar amounts |
 | Google Maps URL | Powers the "Open in Maps" button |
 | Site URL | Needed for canonical tags and `sitemap.xml` |
+| `refundApiBaseUrl` | The real Laundroweb production URL -- the refund form POSTs there. Until set, `/refund/` shows a phone/email fallback instead of a form that goes nowhere. |
+| `turnstileSiteKey` | A real Cloudflare Turnstile site key for the refund form's human-verification widget. Until set, the form uses Cloudflare's test key, which never actually verifies anyone. |
 
 Until these are filled in, the site renders the placeholder text with the
 `TODO:` prefix stripped, and **omits** them from the structured data handed to
@@ -76,8 +78,19 @@ There is no server, no database, and no environment variables.
 | `/pricing/` | Wash/dry/supply prices and machine-size guidance |
 | `/commercial/` | Business accounts, with a quote form or phone/email fallback |
 | `/visit/` | Hours (open vs. attended), address, directions |
+| `/refund/` | Request a refund for a machine that didn't work -- submits into Laundroweb's review queue, not a form service. `noindex`, so it's left out of the sitemap below. |
 
 `robots.txt` and `sitemap.xml` are generated at build time.
+
+### Language switcher
+
+The site renders in English, Spanish, or Haitian Creole via a switcher in
+the header (and mobile menu), always visible, on every page. Translations
+live in `src/i18n/translations.ts`. If you edit the English prose in
+`site.ts` (the "about" blurb, highlights, FAQs, payment copy, commercial
+segments, amenity captions), the matching keys in `translations.ts` need
+updating too -- `site.ts` stays the single edit point for facts (address,
+phone, hours, prices, equipment counts), not for translated copy.
 
 ### The business-account form
 

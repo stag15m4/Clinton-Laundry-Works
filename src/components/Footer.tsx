@@ -1,12 +1,20 @@
+"use client";
+
 import Link from "next/link";
-import { business, hours, payment } from "@/content/site";
+import { business, hours, fascardRolloutComplete } from "@/content/site";
 import { display, telHref, mailtoHref, isPlaceholder } from "@/content/util";
+import { useLanguage } from "@/i18n/LanguageProvider";
+import { interpolate } from "@/i18n/interpolate";
+import { dayKey } from "@/i18n/day-key";
 import { CardIcons } from "./CardIcons";
 import { SocialIcons } from "./SocialIcons";
 import { Container } from "./Container";
 
 export function Footer() {
   const { address } = business;
+  const { t } = useLanguage();
+
+  const cardTitle = fascardRolloutComplete ? t("paymentCardTitleDone") : t("paymentCardTitleRolling");
 
   return (
     <footer className="border-t border-slate-800 bg-slate-900 text-slate-300">
@@ -36,11 +44,11 @@ export function Footer() {
           </div>
 
           <div>
-            <h2 className="text-base font-semibold text-white">Hours</h2>
+            <h2 className="text-base font-semibold text-white">{t("footerHours")}</h2>
             <dl className="mt-4 space-y-1 text-sm">
               {hours.map((h) => (
                 <div key={h.day} className="flex justify-between gap-4">
-                  <dt>{h.day}</dt>
+                  <dt>{t(dayKey(h.day))}</dt>
                   <dd className="text-right text-slate-400">{display(h.open)}</dd>
                 </div>
               ))}
@@ -48,22 +56,23 @@ export function Footer() {
           </div>
 
           <div>
-            <h2 className="text-base font-semibold text-white">Pages</h2>
+            <h2 className="text-base font-semibold text-white">{t("footerPages")}</h2>
             <ul className="mt-4 space-y-2 text-sm">
-              <li><Link href="/" className="hover:text-white">Home</Link></li>
-              <li><Link href="/pricing/" className="hover:text-white">Pricing</Link></li>
-              <li><Link href="/commercial/" className="hover:text-white">Business Accounts</Link></li>
-              <li><Link href="/visit/" className="hover:text-white">Hours &amp; Location</Link></li>
+              <li><Link href="/" className="hover:text-white">{t("navHome")}</Link></li>
+              <li><Link href="/pricing/" className="hover:text-white">{t("navPricing")}</Link></li>
+              <li><Link href="/commercial/" className="hover:text-white">{t("navCommercial")}</Link></li>
+              <li><Link href="/visit/" className="hover:text-white">{t("navVisit")}</Link></li>
+              <li><Link href="/refund/" className="hover:text-white">{t("navRefund")}</Link></li>
             </ul>
           </div>
         </div>
 
         <div className="mt-12 flex flex-col gap-6 border-t border-slate-800 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-slate-500">
-            &copy; {new Date().getFullYear()} {business.name}. All rights reserved.
+            {interpolate(t("footerRights"), { year: new Date().getFullYear(), name: business.name })}
           </p>
           <div className="flex items-center gap-3 text-slate-500">
-            <span className="text-sm">{payment.card.title}</span>
+            <span className="text-sm">{cardTitle}</span>
             <CardIcons />
           </div>
         </div>

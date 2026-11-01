@@ -339,6 +339,38 @@ export const faqs = [
  */
 export const formEndpoint = "";
 
+/**
+ * Refund request form (/refund/).
+ *
+ * Unlike the business-account form above, this one submits into the
+ * Laundroweb ops app's review queue (POST /api/refund-requests) rather than
+ * a third-party form service, so a submission actually shows up for the
+ * owner to review -- it is never silently dropped like an unset
+ * formEndpoint would be.
+ *
+ * TODO: Set this to the Laundroweb production URL, no trailing slash
+ *       (e.g. "https://ops.clintonlaundryworks.com"). Laundroweb's
+ *       POST /api/refund-requests only allows cross-origin calls from
+ *       this site's own origin (see src/lib/public-cors.ts there), so the
+ *       form will fail until both sides agree on the real URLs.
+ */
+export const refundApiBaseUrl = "TODO: https://<laundroweb-production-domain>";
+
+/**
+ * Cloudflare Turnstile site key (public, not a secret) for the refund
+ * form's human-verification widget.
+ *
+ * Get one at https://dash.cloudflare.com/?to=/:account/turnstile -- create
+ * a widget for this site's real domain. The matching *secret* key goes in
+ * Laundroweb's own environment (TURNSTILE_SECRET_KEY there), never here;
+ * this site has no server and no secrets, by design.
+ *
+ * TODO: Replace with the real site key before launch. Until then the
+ *       refund form shows Cloudflare's test widget, which never actually
+ *       verifies anyone.
+ */
+export const turnstileSiteKey = "TODO: 1x00000000000000000000AA (Cloudflare's test site key -- replace before launch)";
+
 /** Types of business we serve. Shown on the commercial page. */
 export const commercialSegments = [
   {
