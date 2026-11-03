@@ -20,6 +20,7 @@ export function Header() {
     { href: "/pricing/", label: t("navPricing") },
     { href: "/commercial/", label: t("navCommercial") },
     { href: "/visit/", label: t("navVisit") },
+    { href: "/videos/", label: t("navVideos") },
     { href: "/refund/", label: t("navRefund") },
   ];
   const callLabel = (key: TranslationKey) => interpolate(t(key), { phone: display(business.phone) });

@@ -18,6 +18,7 @@ const en = {
   navPricing: "Pricing",
   navCommercial: "Business Accounts",
   navVisit: "Hours & Location",
+  navVideos: "Videos",
   navRefund: "Request a Refund",
   callLabel: "Call {phone}",
   openMenuSr: "Open menu",
@@ -114,6 +115,9 @@ const en = {
   pricingPageLead:
     "Pay for the machine that fits your load. Bigger drums cost more per cycle but far less per pound — one 60 lb wash beats three small ones on both price and time.",
   pricingWashersCaption: "Washers",
+  videosHeading: "Silly Videos",
+  videosLead:
+    "A few short, silly videos made just for fun — perfect for passing the time while your laundry's in the dryer.",
   pricingDryersCaption: "Dryers",
   pricingCapacityHeader: "Capacity",
   pricingPriceHeader: "Price",
@@ -240,6 +244,7 @@ const es: Record<keyof typeof en, string> = {
   navPricing: "Precios",
   navCommercial: "Cuentas Comerciales",
   navVisit: "Horario y Ubicación",
+  navVideos: "Videos",
   navRefund: "Solicitar un Reembolso",
   callLabel: "Llame al {phone}",
   openMenuSr: "Abrir menú",
@@ -334,6 +339,9 @@ const es: Record<keyof typeof en, string> = {
   pricingPageLead:
     "Pague por la máquina que se ajusta a su carga. Los tambores más grandes cuestan más por ciclo pero mucho menos por libra — un lavado de 60 lb le gana a tres pequeños en precio y tiempo.",
   pricingWashersCaption: "Lavadoras",
+  videosHeading: "Videos Divertidos",
+  videosLead:
+    "Unos videos cortos y divertidos, hechos solo por diversión — perfectos para pasar el tiempo mientras su ropa está en la secadora.",
   pricingDryersCaption: "Secadoras",
   pricingCapacityHeader: "Capacidad",
   pricingPriceHeader: "Precio",
@@ -457,6 +465,7 @@ const ht: Record<keyof typeof en, string> = {
   navPricing: "Pri",
   navCommercial: "Kont Biznis",
   navVisit: "Orè ak Kote Nou Ye",
+  navVideos: "Videyo",
   navRefund: "Mande yon Ranbousman",
   callLabel: "Rele {phone}",
   openMenuSr: "Louvri meni an",
@@ -549,6 +558,9 @@ const ht: Record<keyof typeof en, string> = {
   pricingPageLead:
     "Peye pou machin ki ale ak chaj ou. Gwo tanbou koute plis pou chak sik men pi piti pou chak liv — yon sèl lave 60 lb bat twa ti lave sou pri ak tan tou de.",
   pricingWashersCaption: "Machin Lave",
+  videosHeading: "Videyo Komik",
+  videosLead:
+    "Kèk kout videyo komik nou fè jis pou amize moun — pafè pou pase tan pandan rad ou ap seche.",
   pricingDryersCaption: "Machin Seche",
   pricingCapacityHeader: "Kapasite",
   pricingPriceHeader: "Pri",

@@ -4,7 +4,7 @@ import { orFallback } from "@/content/util";
 
 export const dynamic = "force-static";
 
-const routes = ["", "/pricing", "/commercial", "/visit"];
+const routes = ["", "/pricing", "/commercial", "/visit", "/videos"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Falls back to a relative-looking base until the real domain is set; the
