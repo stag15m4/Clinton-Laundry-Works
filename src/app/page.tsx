@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { GoogleReviews } from "@/components/GoogleReviews";
 import Link from "next/link";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
@@ -154,6 +155,8 @@ export default function HomePage() {
           ))}
         </div>
       </Section>
+
+      <GoogleReviews />
 
       {/* ── FAQ ──────────────────────────────────────────────────────────── */}
       <Section tone="muted" title={t("faqTitle")}>

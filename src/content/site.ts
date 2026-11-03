@@ -40,36 +40,10 @@ export const business = {
     zip: "28328",
   },
 
-  /**
-   * Google Maps link, used by the "Open in Maps" button and published as
-   * `hasMap` in the LocalBusiness structured data.
-   *
-   * HELD BACK ON PURPOSE. The Business Profile at this address is claimed but
-   * still carries the previous operator's name (Fluff n Fold) pending Google
-   * verification. Publishing it now would send customers to a listing with the
-   * wrong business name, and would point `hasMap` at a listing whose name
-   * contradicts this site — exactly the name/address/phone inconsistency that
-   * hurts local search results.
-   *
-   * While this stays a TODO the site falls back to a Maps search built from
-   * the street address, which gives correct directions without asserting a
-   * business identity. Once Google verifies the rename, drop the "TODO: "
-   * prefix and this goes live as-is.
-   *
-   * The `?g_st=` tracking parameter Maps appends when sharing from a phone has
-   * already been stripped; it identifies the sharing app, not the place.
-   */
-  mapUrl: "TODO: https://maps.app.goo.gl/9WcnxucA9MwwhVx68 (live once Google verifies the rename from Fluff n Fold)",
-
-  /**
-   * Google review link, for the "leave us a review" call to action.
-   *
-   * Empty until the Business Profile exists; the button stays hidden until
-   * then. Once claimed, use the short review URL Google gives you
-   * (https://g.page/r/<id>/review) so it opens the review box directly
-   * instead of the listing.
-   */
-  googleReviewUrl: "",
+  /** Verified Google Business Profile and direct review form. */
+  mapUrl: "https://maps.app.goo.gl/9WcnxucA9MwwhVx68",
+  googleProfileUrl: "https://g.page/r/Cf4TV-LGQKzpEBI",
+  googleReviewUrl: "https://g.page/r/Cf4TV-LGQKzpEBI/review",
 
   /** Public site URL once the domain is live. Used for SEO canonical tags. */
   siteUrl: "https://www.clintonlaundryworks.com",
