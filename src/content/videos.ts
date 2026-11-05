@@ -12,5 +12,6 @@
  * entries to the TOP of the array so the newest video shows first.
  */
 export const videos = [
+  { id: "eJaJ0MvAwAw", title: "Measure Before You Pour" },
   { id: "n4kNysnmme0", title: "Don't Feed Wally Too Much!" },
 ] as const;
